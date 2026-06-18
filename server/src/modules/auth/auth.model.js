@@ -2,14 +2,19 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
-  name:           { type: String, required: true },
-  email:          { type: String, required: true, unique: true, lowercase: true },
-  password:       { type: String },
-  googleId:       { type: String },
-  avatarUrl:      { type: String },
-  xp:             { type: Number, default: 0 },
-  streak:         { type: Number, default: 0 },
-  lastActiveDate: { type: Date },
+  name:                { type: String, required: true },
+  email:               { type: String, required: true, unique: true, lowercase: true },
+  password:            { type: String },
+  googleId:            { type: String },
+  avatarUrl:           { type: String },
+  xp:                  { type: Number, default: 0 },
+  streak:              { type: Number, default: 0 },
+  lastActiveDate:      { type: Date },
+  isVerified:          { type: Boolean, default: false },
+  verifyToken:         { type: String },
+  verifyTokenExpiry:   { type: Date },
+  resetToken:          { type: String },
+  resetTokenExpiry:    { type: Date },
 }, { timestamps: true });
 
 UserSchema.pre('save', async function () {
