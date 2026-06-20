@@ -15,6 +15,16 @@ const UserSchema = new mongoose.Schema({
   verifyTokenExpiry:   { type: Date },
   resetToken:          { type: String },
   resetTokenExpiry:    { type: Date },
+  learningPaths: [{
+    pathSlug: { type: String, required: true },
+    nodeStatuses: {
+      type: Map,
+      of: new mongoose.Schema({
+        mastery: { type: Number, default: 0 },
+        level: { type: String, enum: ['locked', 'not-started', 'weak', 'medium', 'strong'], default: 'not-started' },
+      }, { _id: false })
+    }
+  }],
 }, { timestamps: true });
 
 UserSchema.pre('save', async function () {
