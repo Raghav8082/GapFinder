@@ -1,0 +1,37 @@
+{
+  "slug": "class-10-science",
+  "title": "Class 10 Science (NCERT)",
+  "category": "academic",
+  "description": "NCERT-aligned Class 10 Science covering Physics, Chemistry, and Biology",
+  "nodes": [
+    { "id": "chemical-reactions", "title": "Chemical Reactions & Equations", "estimatedHours": 5, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "types-of-reactions", "title": "Types of Chemical Reactions", "resources": [] },
+      { "id": "balancing-equations", "title": "Balancing Chemical Equations", "resources": [] }
+    ]},
+    { "id": "acids-bases-salts", "title": "Acids, Bases & Salts", "estimatedHours": 5, "prerequisites": ["chemical-reactions"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "ph-scale", "title": "pH Scale", "resources": [] },
+      { "id": "salts-properties", "title": "Properties of Salts", "resources": [] }
+    ]},
+    { "id": "light-reflection-refraction", "title": "Light: Reflection & Refraction", "estimatedHours": 6, "prerequisites": [], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "reflection-laws", "title": "Laws of Reflection", "resources": [] },
+      { "id": "refraction-lenses", "title": "Refraction & Lenses", "resources": [] }
+    ]},
+    { "id": "electricity", "title": "Electricity", "estimatedHours": 6, "prerequisites": [], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "ohms-law", "title": "Ohm's Law & Resistance", "resources": [] },
+      { "id": "circuits", "title": "Series & Parallel Circuits", "resources": [] }
+    ]},
+    { "id": "life-processes", "title": "Life Processes", "estimatedHours": 7, "prerequisites": [], "position": { "x": 0, "y": 400 }, "subtopics": [
+      { "id": "nutrition", "title": "Nutrition in Organisms", "resources": [] },
+      { "id": "respiration-circulation", "title": "Respiration & Circulation", "resources": [] }
+    ]},
+    { "id": "heredity-evolution", "title": "Heredity & Evolution", "estimatedHours": 5, "prerequisites": ["life-processes"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "mendel-genetics", "title": "Mendel's Laws & Genetics", "resources": [] },
+      { "id": "evolution-basics", "title": "Evolution Basics", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "chemical-reactions", "to": "acids-bases-salts" },
+    { "from": "light-reflection-refraction", "to": "electricity" },
+    { "from": "life-processes", "to": "heredity-evolution" }
+  ]
+}

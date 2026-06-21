@@ -1,0 +1,41 @@
+{
+  "slug": "sql",
+  "title": "SQL & Relational Databases",
+  "category": "tech",
+  "description": "Querying, designing, and managing relational databases with SQL",
+  "nodes": [
+    { "id": "sql-basics", "title": "SQL Basics", "estimatedHours": 4, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "select-statements", "title": "SELECT, WHERE, ORDER BY", "resources": [] },
+      { "id": "filtering", "title": "Filtering & Aliasing", "resources": [] }
+    ]},
+    { "id": "joins", "title": "Joins", "estimatedHours": 6, "prerequisites": ["sql-basics"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "inner-outer-joins", "title": "Inner & Outer Joins", "resources": [] },
+      { "id": "self-joins", "title": "Self Joins & Multi-table Joins", "resources": [] }
+    ]},
+    { "id": "aggregations", "title": "Aggregations & Grouping", "estimatedHours": 5, "prerequisites": ["sql-basics"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "group-by", "title": "GROUP BY & HAVING", "resources": [] },
+      { "id": "agg-functions", "title": "COUNT, SUM, AVG, MIN, MAX", "resources": [] }
+    ]},
+    { "id": "subqueries", "title": "Subqueries & CTEs", "estimatedHours": 6, "prerequisites": ["joins", "aggregations"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "nested-subqueries", "title": "Nested Subqueries", "resources": [] },
+      { "id": "ctes", "title": "Common Table Expressions", "resources": [] }
+    ]},
+    { "id": "schema-design", "title": "Database Design", "estimatedHours": 7, "prerequisites": ["joins"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "normalization", "title": "Normalization (1NF-3NF)", "resources": [] },
+      { "id": "keys-constraints", "title": "Primary/Foreign Keys & Constraints", "resources": [] }
+    ]},
+    { "id": "indexes-performance", "title": "Indexes & Performance", "estimatedHours": 5, "prerequisites": ["subqueries", "schema-design"], "position": { "x": 300, "y": 400 }, "subtopics": [
+      { "id": "indexing", "title": "Creating & Using Indexes", "resources": [] },
+      { "id": "query-optimization", "title": "Query Optimization Basics", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "sql-basics", "to": "joins" },
+    { "from": "sql-basics", "to": "aggregations" },
+    { "from": "joins", "to": "subqueries" },
+    { "from": "aggregations", "to": "subqueries" },
+    { "from": "joins", "to": "schema-design" },
+    { "from": "subqueries", "to": "indexes-performance" },
+    { "from": "schema-design", "to": "indexes-performance" }
+  ]
+}

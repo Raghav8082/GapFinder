@@ -1,0 +1,37 @@
+{
+  "slug": "mern-stack",
+  "title": "MERN Stack",
+  "category": "tech",
+  "description": "Full stack JavaScript development with MongoDB, Express, React, and Node.js",
+  "nodes": [
+    { "id": "js-fundamentals", "title": "JavaScript Fundamentals", "estimatedHours": 6, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "variables", "title": "Variables & Data Types", "resources": [] },
+      { "id": "functions", "title": "Functions & Scope", "resources": [] },
+      { "id": "async", "title": "Async/Await & Promises", "resources": [] }
+    ]},
+    { "id": "react-basics", "title": "React Basics", "estimatedHours": 8, "prerequisites": ["js-fundamentals"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "components", "title": "Components & JSX", "resources": [] },
+      { "id": "state-props", "title": "State & Props", "resources": [] },
+      { "id": "hooks", "title": "useState & useEffect", "resources": [] }
+    ]},
+    { "id": "nodejs-express", "title": "Node.js & Express", "estimatedHours": 8, "prerequisites": ["js-fundamentals"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "express-routing", "title": "Express Routing", "resources": [] },
+      { "id": "middleware", "title": "Middleware", "resources": [] }
+    ]},
+    { "id": "mongodb", "title": "MongoDB & Mongoose", "estimatedHours": 6, "prerequisites": ["nodejs-express"], "position": { "x": 0, "y": 400 }, "subtopics": [
+      { "id": "crud", "title": "CRUD Operations", "resources": [] },
+      { "id": "schemas", "title": "Mongoose Schemas", "resources": [] }
+    ]},
+    { "id": "full-stack-integration", "title": "Full Stack Integration", "estimatedHours": 10, "prerequisites": ["react-basics", "mongodb"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "rest-apis", "title": "Consuming REST APIs", "resources": [] },
+      { "id": "auth-flow", "title": "Auth Flow End to End", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "js-fundamentals", "to": "react-basics" },
+    { "from": "js-fundamentals", "to": "nodejs-express" },
+    { "from": "nodejs-express", "to": "mongodb" },
+    { "from": "react-basics", "to": "full-stack-integration" },
+    { "from": "mongodb", "to": "full-stack-integration" }
+  ]
+}

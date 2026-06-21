@@ -1,0 +1,52 @@
+{
+  "slug": "java",
+  "title": "Java Programming",
+  "category": "tech",
+  "description": "Core Java programming from fundamentals to object-oriented application development",
+  "nodes": [
+    { "id": "java-basics", "title": "Java Basics", "estimatedHours": 5, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "syntax-datatypes", "title": "Syntax & Data Types", "resources": [] },
+      { "id": "operators-java", "title": "Operators & Expressions", "resources": [] }
+    ]},
+    { "id": "control-flow-java", "title": "Control Flow", "estimatedHours": 5, "prerequisites": ["java-basics"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "conditionals-java", "title": "If/Else & Switch", "resources": [] },
+      { "id": "loops-java", "title": "For, While & Do-While Loops", "resources": [] }
+    ]},
+    { "id": "arrays-java", "title": "Arrays", "estimatedHours": 4, "prerequisites": ["control-flow-java"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "1d-2d-arrays", "title": "1D & 2D Arrays", "resources": [] },
+      { "id": "array-methods", "title": "Array Methods & Utilities", "resources": [] }
+    ]},
+    { "id": "oop-java", "title": "Object-Oriented Programming", "estimatedHours": 10, "prerequisites": ["control-flow-java"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "classes-objects-java", "title": "Classes & Objects", "resources": [] },
+      { "id": "inheritance-java", "title": "Inheritance & Polymorphism", "resources": [] },
+      { "id": "interfaces-abstract", "title": "Interfaces & Abstract Classes", "resources": [] }
+    ]},
+    { "id": "collections-framework", "title": "Collections Framework", "estimatedHours": 8, "prerequisites": ["oop-java", "arrays-java"], "position": { "x": 400, "y": 200 }, "subtopics": [
+      { "id": "lists-sets-maps", "title": "Lists, Sets & Maps", "resources": [] },
+      { "id": "iterators", "title": "Iterators & Comparators", "resources": [] }
+    ]},
+    { "id": "exception-handling-java", "title": "Exception Handling", "estimatedHours": 4, "prerequisites": ["oop-java"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "try-catch-java", "title": "Try/Catch/Finally", "resources": [] },
+      { "id": "custom-exceptions", "title": "Custom Exceptions", "resources": [] }
+    ]},
+    { "id": "multithreading", "title": "Multithreading & Concurrency", "estimatedHours": 8, "prerequisites": ["collections-framework"], "position": { "x": 400, "y": 400 }, "subtopics": [
+      { "id": "threads-basics", "title": "Creating & Managing Threads", "resources": [] },
+      { "id": "synchronization", "title": "Synchronization Basics", "resources": [] }
+    ]},
+    { "id": "java-projects", "title": "Building Java Projects", "estimatedHours": 10, "prerequisites": ["exception-handling-java", "collections-framework"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "file-io-java", "title": "File I/O in Java", "resources": [] },
+      { "id": "maven-basics", "title": "Build Tools (Maven/Gradle) Basics", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "java-basics", "to": "control-flow-java" },
+    { "from": "control-flow-java", "to": "arrays-java" },
+    { "from": "control-flow-java", "to": "oop-java" },
+    { "from": "oop-java", "to": "collections-framework" },
+    { "from": "arrays-java", "to": "collections-framework" },
+    { "from": "oop-java", "to": "exception-handling-java" },
+    { "from": "collections-framework", "to": "multithreading" },
+    { "from": "exception-handling-java", "to": "java-projects" },
+    { "from": "collections-framework", "to": "java-projects" }
+  ]
+}

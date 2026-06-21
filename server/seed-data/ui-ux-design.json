@@ -1,0 +1,35 @@
+{
+  "slug": "ui-ux-design",
+  "title": "UI/UX Design",
+  "category": "skill",
+  "description": "Foundations of user interface and user experience design for digital products",
+  "nodes": [
+    { "id": "design-fundamentals", "title": "Design Fundamentals", "estimatedHours": 5, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "color-theory", "title": "Color Theory", "resources": [] },
+      { "id": "typography", "title": "Typography Basics", "resources": [] }
+    ]},
+    { "id": "ux-research", "title": "UX Research", "estimatedHours": 6, "prerequisites": ["design-fundamentals"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "user-personas", "title": "User Personas", "resources": [] },
+      { "id": "user-interviews", "title": "User Interviews & Surveys", "resources": [] }
+    ]},
+    { "id": "wireframing", "title": "Wireframing", "estimatedHours": 5, "prerequisites": ["design-fundamentals"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "low-fidelity-wireframes", "title": "Low-Fidelity Wireframes", "resources": [] },
+      { "id": "information-architecture", "title": "Information Architecture", "resources": [] }
+    ]},
+    { "id": "prototyping", "title": "Prototyping", "estimatedHours": 7, "prerequisites": ["wireframing", "ux-research"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "figma-basics", "title": "Figma Basics", "resources": [] },
+      { "id": "interactive-prototypes", "title": "Interactive Prototypes", "resources": [] }
+    ]},
+    { "id": "usability-testing", "title": "Usability Testing", "estimatedHours": 5, "prerequisites": ["prototyping"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "testing-methods", "title": "Usability Testing Methods", "resources": [] },
+      { "id": "iterating-feedback", "title": "Iterating on Feedback", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "design-fundamentals", "to": "ux-research" },
+    { "from": "design-fundamentals", "to": "wireframing" },
+    { "from": "wireframing", "to": "prototyping" },
+    { "from": "ux-research", "to": "prototyping" },
+    { "from": "prototyping", "to": "usability-testing" }
+  ]
+}

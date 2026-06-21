@@ -1,0 +1,39 @@
+{
+  "slug": "flutter",
+  "title": "Flutter Mobile Development",
+  "category": "tech",
+  "description": "Build cross-platform mobile apps using Flutter and Dart",
+  "nodes": [
+    { "id": "dart-basics", "title": "Dart Basics", "estimatedHours": 6, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "dart-syntax", "title": "Dart Syntax & Types", "resources": [] },
+      { "id": "dart-oop", "title": "Classes & OOP in Dart", "resources": [] }
+    ]},
+    { "id": "flutter-widgets", "title": "Flutter Widgets", "estimatedHours": 8, "prerequisites": ["dart-basics"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "stateless-stateful", "title": "Stateless vs Stateful Widgets", "resources": [] },
+      { "id": "layout-widgets", "title": "Layout Widgets (Row, Column, Stack)", "resources": [] }
+    ]},
+    { "id": "navigation", "title": "Navigation & Routing", "estimatedHours": 5, "prerequisites": ["flutter-widgets"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "navigator-basics", "title": "Navigator & Routes", "resources": [] },
+      { "id": "named-routes", "title": "Named Routes & Passing Data", "resources": [] }
+    ]},
+    { "id": "state-management", "title": "State Management", "estimatedHours": 9, "prerequisites": ["flutter-widgets"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "setstate-provider", "title": "setState & Provider", "resources": [] },
+      { "id": "bloc-riverpod", "title": "Intro to Bloc/Riverpod", "resources": [] }
+    ]},
+    { "id": "api-integration", "title": "API Integration", "estimatedHours": 7, "prerequisites": ["state-management"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "http-requests", "title": "HTTP Requests with http/dio", "resources": [] },
+      { "id": "json-parsing", "title": "JSON Parsing & Models", "resources": [] }
+    ]},
+    { "id": "local-storage", "title": "Local Storage & Persistence", "estimatedHours": 5, "prerequisites": ["navigation"], "position": { "x": 400, "y": 200 }, "subtopics": [
+      { "id": "shared-preferences", "title": "Shared Preferences", "resources": [] },
+      { "id": "sqflite", "title": "SQLite with sqflite", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "dart-basics", "to": "flutter-widgets" },
+    { "from": "flutter-widgets", "to": "navigation" },
+    { "from": "flutter-widgets", "to": "state-management" },
+    { "from": "state-management", "to": "api-integration" },
+    { "from": "navigation", "to": "local-storage" }
+  ]
+}

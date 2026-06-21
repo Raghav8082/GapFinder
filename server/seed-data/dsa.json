@@ -1,0 +1,51 @@
+{
+  "slug": "dsa",
+  "title": "Data Structures & Algorithms",
+  "category": "tech",
+  "description": "Core DSA concepts needed for technical interviews and competitive programming",
+  "nodes": [
+    { "id": "complexity-analysis", "title": "Time & Space Complexity", "estimatedHours": 4, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "big-o", "title": "Big O Notation", "resources": [] },
+      { "id": "complexity-tradeoffs", "title": "Time vs Space Tradeoffs", "resources": [] }
+    ]},
+    { "id": "arrays-strings", "title": "Arrays & Strings", "estimatedHours": 6, "prerequisites": ["complexity-analysis"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "array-basics", "title": "Array Operations", "resources": [] },
+      { "id": "two-pointers", "title": "Two Pointer Technique", "resources": [] },
+      { "id": "sliding-window", "title": "Sliding Window", "resources": [] }
+    ]},
+    { "id": "linked-lists", "title": "Linked Lists", "estimatedHours": 6, "prerequisites": ["complexity-analysis"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "singly-linked", "title": "Singly Linked Lists", "resources": [] },
+      { "id": "doubly-linked", "title": "Doubly Linked Lists", "resources": [] }
+    ]},
+    { "id": "stacks-queues", "title": "Stacks & Queues", "estimatedHours": 5, "prerequisites": ["linked-lists"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "stack-ops", "title": "Stack Operations & Use Cases", "resources": [] },
+      { "id": "queue-ops", "title": "Queue & Deque Operations", "resources": [] }
+    ]},
+    { "id": "trees", "title": "Trees", "estimatedHours": 8, "prerequisites": ["stacks-queues"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "binary-trees", "title": "Binary Trees & Traversals", "resources": [] },
+      { "id": "bst", "title": "Binary Search Trees", "resources": [] }
+    ]},
+    { "id": "graphs", "title": "Graphs", "estimatedHours": 9, "prerequisites": ["trees"], "position": { "x": 400, "y": 400 }, "subtopics": [
+      { "id": "graph-representation", "title": "Graph Representation", "resources": [] },
+      { "id": "bfs-dfs", "title": "BFS & DFS", "resources": [] }
+    ]},
+    { "id": "sorting-searching", "title": "Sorting & Searching", "estimatedHours": 6, "prerequisites": ["arrays-strings"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "sorting-algos", "title": "Sorting Algorithms", "resources": [] },
+      { "id": "binary-search", "title": "Binary Search", "resources": [] }
+    ]},
+    { "id": "dynamic-programming", "title": "Dynamic Programming", "estimatedHours": 10, "prerequisites": ["sorting-searching", "trees"], "position": { "x": 600, "y": 200 }, "subtopics": [
+      { "id": "memoization", "title": "Memoization & Tabulation", "resources": [] },
+      { "id": "classic-dp", "title": "Classic DP Problems", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "complexity-analysis", "to": "arrays-strings" },
+    { "from": "complexity-analysis", "to": "linked-lists" },
+    { "from": "linked-lists", "to": "stacks-queues" },
+    { "from": "stacks-queues", "to": "trees" },
+    { "from": "trees", "to": "graphs" },
+    { "from": "arrays-strings", "to": "sorting-searching" },
+    { "from": "sorting-searching", "to": "dynamic-programming" },
+    { "from": "trees", "to": "dynamic-programming" }
+  ]
+}

@@ -50,3 +50,42 @@ export const getNodeDetail = async (pathSlug, nodeId) => {
 
   return node; // includes subtopics + resources
 };
+
+// ADD these two functions to the bottom of skillmap.services.js
+
+export const enrollInPath = async (userId, pathSlug) => {
+  const path = await LearningPath.findOne({ slug: pathSlug });
+  if (!path) throw new Error('Learning path not found');
+
+  const user = await User.findById(userId);
+  const alreadyEnrolled = user.learningPaths.some(p => p.pathSlug === pathSlug);
+  if (alreadyEnrolled) return { message: 'Already enrolled', pathSlug };
+
+  user.learningPaths.push({ pathSlug, nodeStatuses: new Map() });
+  await user.save();
+
+  return { message: 'Enrolled successfully', pathSlug };
+};
+
+export const applyDiagnosticResults = async (userId, pathSlug, masteryByNodeId) => {
+  const user = await User.findById(userId);
+  let userPath = user.learningPaths.find(p => p.pathSlug === pathSlug);
+
+  if (!userPath) {
+    user.learningPaths.push({ pathSlug, nodeStatuses: new Map() });
+    userPath = user.learningPaths[user.learningPaths.length - 1];
+  }
+
+  for (const [nodeId, mastery] of Object.entries(masteryByNodeId)) {
+    const level =
+      mastery >= 70 ? 'strong' :
+      mastery >= 40 ? 'medium' :
+      mastery > 0   ? 'weak' :
+                      'not-started';
+
+    userPath.nodeStatuses.set(nodeId, { mastery, level });
+  }
+
+  await user.save();
+  return userPath;
+};

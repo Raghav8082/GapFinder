@@ -1,0 +1,40 @@
+{
+  "slug": "digital-marketing",
+  "title": "Digital Marketing",
+  "category": "skill",
+  "description": "Core digital marketing skills including SEO, social media, and analytics",
+  "nodes": [
+    { "id": "marketing-fundamentals", "title": "Marketing Fundamentals", "estimatedHours": 4, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "marketing-funnel", "title": "The Marketing Funnel", "resources": [] },
+      { "id": "target-audience", "title": "Identifying Target Audience", "resources": [] }
+    ]},
+    { "id": "seo", "title": "Search Engine Optimization", "estimatedHours": 7, "prerequisites": ["marketing-fundamentals"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "on-page-seo", "title": "On-Page SEO", "resources": [] },
+      { "id": "keyword-research", "title": "Keyword Research", "resources": [] }
+    ]},
+    { "id": "social-media-marketing", "title": "Social Media Marketing", "estimatedHours": 6, "prerequisites": ["marketing-fundamentals"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "content-strategy", "title": "Content Strategy", "resources": [] },
+      { "id": "platform-specifics", "title": "Platform-Specific Best Practices", "resources": [] }
+    ]},
+    { "id": "paid-ads", "title": "Paid Advertising", "estimatedHours": 8, "prerequisites": ["social-media-marketing"], "position": { "x": 0, "y": 400 }, "subtopics": [
+      { "id": "google-ads", "title": "Google Ads Basics", "resources": [] },
+      { "id": "meta-ads", "title": "Meta Ads Basics", "resources": [] }
+    ]},
+    { "id": "email-marketing", "title": "Email Marketing", "estimatedHours": 4, "prerequisites": ["marketing-fundamentals"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "email-campaigns", "title": "Building Campaigns", "resources": [] },
+      { "id": "segmentation", "title": "List Segmentation", "resources": [] }
+    ]},
+    { "id": "analytics", "title": "Marketing Analytics", "estimatedHours": 6, "prerequisites": ["seo", "paid-ads"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "google-analytics", "title": "Google Analytics Basics", "resources": [] },
+      { "id": "kpi-tracking", "title": "Tracking KPIs & ROI", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "marketing-fundamentals", "to": "seo" },
+    { "from": "marketing-fundamentals", "to": "social-media-marketing" },
+    { "from": "marketing-fundamentals", "to": "email-marketing" },
+    { "from": "social-media-marketing", "to": "paid-ads" },
+    { "from": "seo", "to": "analytics" },
+    { "from": "paid-ads", "to": "analytics" }
+  ]
+}

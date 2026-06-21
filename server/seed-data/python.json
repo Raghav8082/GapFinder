@@ -1,0 +1,48 @@
+{
+  "slug": "python",
+  "title": "Python Programming",
+  "category": "tech",
+  "description": "Core Python programming from fundamentals to building real applications",
+  "nodes": [
+    { "id": "python-basics", "title": "Python Basics", "estimatedHours": 6, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "syntax-variables", "title": "Syntax & Variables", "resources": [] },
+      { "id": "data-types", "title": "Data Types (str, int, float, bool)", "resources": [] },
+      { "id": "operators", "title": "Operators & Expressions", "resources": [] }
+    ]},
+    { "id": "control-flow", "title": "Control Flow", "estimatedHours": 5, "prerequisites": ["python-basics"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "conditionals", "title": "If/Elif/Else", "resources": [] },
+      { "id": "loops", "title": "For & While Loops", "resources": [] }
+    ]},
+    { "id": "data-structures", "title": "Data Structures", "estimatedHours": 8, "prerequisites": ["control-flow"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "lists-tuples", "title": "Lists & Tuples", "resources": [] },
+      { "id": "dicts-sets", "title": "Dictionaries & Sets", "resources": [] },
+      { "id": "comprehensions", "title": "List Comprehensions", "resources": [] }
+    ]},
+    { "id": "functions-modules", "title": "Functions & Modules", "estimatedHours": 6, "prerequisites": ["control-flow"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "defining-functions", "title": "Defining Functions & Arguments", "resources": [] },
+      { "id": "modules-imports", "title": "Modules & Imports", "resources": [] }
+    ]},
+    { "id": "oop-python", "title": "Object-Oriented Python", "estimatedHours": 8, "prerequisites": ["functions-modules", "data-structures"], "position": { "x": 400, "y": 200 }, "subtopics": [
+      { "id": "classes-objects", "title": "Classes & Objects", "resources": [] },
+      { "id": "inheritance", "title": "Inheritance & Polymorphism", "resources": [] }
+    ]},
+    { "id": "file-error-handling", "title": "File Handling & Errors", "estimatedHours": 4, "prerequisites": ["functions-modules"], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "file-io", "title": "Reading & Writing Files", "resources": [] },
+      { "id": "exceptions", "title": "Try/Except & Exceptions", "resources": [] }
+    ]},
+    { "id": "libraries-projects", "title": "Libraries & Real Projects", "estimatedHours": 10, "prerequisites": ["oop-python", "file-error-handling"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "pip-venv", "title": "pip & Virtual Environments", "resources": [] },
+      { "id": "requests-apis", "title": "Working with APIs (requests)", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "python-basics", "to": "control-flow" },
+    { "from": "control-flow", "to": "data-structures" },
+    { "from": "control-flow", "to": "functions-modules" },
+    { "from": "functions-modules", "to": "oop-python" },
+    { "from": "data-structures", "to": "oop-python" },
+    { "from": "functions-modules", "to": "file-error-handling" },
+    { "from": "oop-python", "to": "libraries-projects" },
+    { "from": "file-error-handling", "to": "libraries-projects" }
+  ]
+}

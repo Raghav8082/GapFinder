@@ -1,0 +1,43 @@
+{
+  "slug": "class-10-maths",
+  "title": "Class 10 Mathematics (NCERT)",
+  "category": "academic",
+  "description": "NCERT-aligned Class 10 Mathematics covering algebra, geometry, and trigonometry",
+  "nodes": [
+    { "id": "real-numbers", "title": "Real Numbers", "estimatedHours": 4, "prerequisites": [], "position": { "x": 0, "y": 0 }, "subtopics": [
+      { "id": "euclid-division", "title": "Euclid's Division Lemma", "resources": [] },
+      { "id": "irrational-numbers", "title": "Irrational Numbers", "resources": [] }
+    ]},
+    { "id": "polynomials", "title": "Polynomials", "estimatedHours": 5, "prerequisites": ["real-numbers"], "position": { "x": 200, "y": 0 }, "subtopics": [
+      { "id": "zeros-of-polynomial", "title": "Zeros of a Polynomial", "resources": [] },
+      { "id": "polynomial-division", "title": "Division Algorithm", "resources": [] }
+    ]},
+    { "id": "linear-equations", "title": "Pair of Linear Equations", "estimatedHours": 6, "prerequisites": ["polynomials"], "position": { "x": 400, "y": 0 }, "subtopics": [
+      { "id": "graphical-method", "title": "Graphical Method", "resources": [] },
+      { "id": "algebraic-methods", "title": "Substitution & Elimination", "resources": [] }
+    ]},
+    { "id": "quadratic-equations", "title": "Quadratic Equations", "estimatedHours": 6, "prerequisites": ["polynomials"], "position": { "x": 200, "y": 200 }, "subtopics": [
+      { "id": "factorization-method", "title": "Solving by Factorization", "resources": [] },
+      { "id": "quadratic-formula", "title": "Quadratic Formula", "resources": [] }
+    ]},
+    { "id": "triangles-similarity", "title": "Triangles & Similarity", "estimatedHours": 6, "prerequisites": [], "position": { "x": 0, "y": 200 }, "subtopics": [
+      { "id": "similarity-criteria", "title": "Criteria for Similarity", "resources": [] },
+      { "id": "pythagoras-theorem", "title": "Pythagoras Theorem", "resources": [] }
+    ]},
+    { "id": "trigonometry", "title": "Introduction to Trigonometry", "estimatedHours": 7, "prerequisites": ["triangles-similarity"], "position": { "x": 0, "y": 400 }, "subtopics": [
+      { "id": "trig-ratios", "title": "Trigonometric Ratios", "resources": [] },
+      { "id": "trig-identities", "title": "Trigonometric Identities", "resources": [] }
+    ]},
+    { "id": "statistics-probability", "title": "Statistics & Probability", "estimatedHours": 6, "prerequisites": ["quadratic-equations"], "position": { "x": 200, "y": 400 }, "subtopics": [
+      { "id": "mean-median-mode", "title": "Mean, Median, Mode", "resources": [] },
+      { "id": "probability-basics", "title": "Probability Basics", "resources": [] }
+    ]}
+  ],
+  "edges": [
+    { "from": "real-numbers", "to": "polynomials" },
+    { "from": "polynomials", "to": "linear-equations" },
+    { "from": "polynomials", "to": "quadratic-equations" },
+    { "from": "triangles-similarity", "to": "trigonometry" },
+    { "from": "quadratic-equations", "to": "statistics-probability" }
+  ]
+}
