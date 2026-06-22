@@ -50,6 +50,32 @@ export const loginRules = [
     .notEmpty().withMessage('Password is required'),
 ];
 
+export const verifyOtpRules = [
+  body('email')
+    .trim()
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Please enter a valid email address')
+    .normalizeEmail(),
+
+  body('otp')
+    .trim()
+    .notEmpty().withMessage('OTP is required')
+    .isLength({ min: 6, max: 6 }).withMessage('OTP must be 6 digits')
+    .isNumeric().withMessage('OTP must contain only digits'),
+];
+
+export const resendOtpRules = [
+  body('email')
+    .trim()
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Please enter a valid email address')
+    .normalizeEmail(),
+
+  body('purpose')
+    .optional()
+    .isIn(['verify', 'reset']).withMessage('Purpose must be "verify" or "reset"'),
+];
+
 export const forgotPasswordRules = [
   body('email')
     .trim()
@@ -58,8 +84,22 @@ export const forgotPasswordRules = [
     .normalizeEmail(),
 ];
 
+export const verifyResetOtpRules = [
+  body('email')
+    .trim()
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Please enter a valid email address')
+    .normalizeEmail(),
+
+  body('otp')
+    .trim()
+    .notEmpty().withMessage('OTP is required')
+    .isLength({ min: 6, max: 6 }).withMessage('OTP must be 6 digits')
+    .isNumeric().withMessage('OTP must contain only digits'),
+];
+
 export const resetPasswordRules = [
-  body('token')
+  body('resetToken')
     .notEmpty().withMessage('Reset token is required'),
 
   body('password')

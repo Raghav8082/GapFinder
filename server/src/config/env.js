@@ -11,10 +11,11 @@ export const ENV = {
   GOOGLE_CLIENT_ID:     process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   SERVER_URL:           process.env.SERVER_URL || 'http://localhost:5000',
-  RESEND_API_KEY:       process.env.RESEND_API_KEY,
+  GMAIL_USER:           process.env.GMAIL_USER,
+  GMAIL_APP_PASSWORD:   process.env.GMAIL_APP_PASSWORD,
 };
 
-const required = ['MONGO_URI', 'REDIS_URL', 'JWT_SECRET', 'JWT_REFRESH_SECRET', 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'RESEND_API_KEY'];
+const required = ['MONGO_URI', 'REDIS_URL', 'JWT_SECRET', 'JWT_REFRESH_SECRET', 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GMAIL_USER', 'GMAIL_APP_PASSWORD'];
 required.forEach(key => {
   if (!process.env[key]) throw new Error(`Missing env var: ${key}`);
 });

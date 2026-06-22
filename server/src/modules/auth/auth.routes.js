@@ -2,15 +2,16 @@ import { Router } from 'express';
 import passport from 'passport';
 import {
   register, login, refresh, logout, getMe,
-  googleCallback, verifyEmailHandler,
-  forgotPasswordHandler, resetPasswordHandler,
+  googleCallback, verifyOtpHandler, resendOtpHandler,
+  forgotPasswordHandler, verifyResetOtpHandler, resetPasswordHandler,
 } from './auth.controller.js';
 import { authGuard } from '../../middleware/auth.guard.js';
 import { authLimiter, forgotPasswordLimiter } from '../../middleware/rateLimiter.js';
 import {
   validate, sanitize,
   registerRules, loginRules,
-  forgotPasswordRules, resetPasswordRules,
+  verifyOtpRules, resendOtpRules,
+  forgotPasswordRules, verifyResetOtpRules, resetPasswordRules,
 } from './auth.validation.js';
 
 const router = Router();
@@ -18,14 +19,16 @@ const router = Router();
 // Apply sanitization to all routes
 router.use(sanitize);
 
-router.post('/register',        authLimiter, registerRules,       validate, register);
-router.post('/login',           authLimiter, loginRules,          validate, login);
-router.post('/refresh',         refresh);
-router.post('/logout',          authGuard,   logout);
-router.get ('/me',              authGuard,   getMe);
-router.get ('/verify-email',    verifyEmailHandler);
-router.post('/forgot-password', forgotPasswordLimiter, forgotPasswordRules, validate, forgotPasswordHandler);
-router.post('/reset-password',  resetPasswordRules,    validate, resetPasswordHandler);
+router.post('/register',          authLimiter, registerRules,       validate, register);
+router.post('/verify-otp',        authLimiter, verifyOtpRules,      validate, verifyOtpHandler);
+router.post('/resend-otp',        authLimiter, resendOtpRules,      validate, resendOtpHandler);
+router.post('/login',             authLimiter, loginRules,           validate, login);
+router.post('/refresh',           refresh);
+router.post('/logout',            authGuard,   logout);
+router.get ('/me',                authGuard,   getMe);
+router.post('/forgot-password',   forgotPasswordLimiter, forgotPasswordRules,  validate, forgotPasswordHandler);
+router.post('/verify-reset-otp',  forgotPasswordLimiter, verifyResetOtpRules,  validate, verifyResetOtpHandler);
+router.post('/reset-password',    resetPasswordRules,    validate, resetPasswordHandler);
 
 // Google OAuth
 router.get('/google',

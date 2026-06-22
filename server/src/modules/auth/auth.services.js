@@ -1,18 +1,60 @@
-import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 import { User } from './auth.model.js';
 import { signAccessToken, signRefreshToken } from './auth.tokens.js';
-import { sendVerificationEmail, sendPasswordResetEmail } from '../../config/email.js';
+import { generateOtp, sendOtpEmail } from '../../config/email.js';
+import { ENV } from '../../config/env.js';
+
+const OTP_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
+
+// ── Registration ────────────────────────────────────────────────
 
 export const registerUser = async (name, email, password) => {
   const exists = await User.findOne({ email });
-  if (exists) throw new Error('Email already registered');
+  if (exists && exists.isVerified) throw new Error('Email already registered');
 
-  const verifyToken = crypto.randomBytes(32).toString('hex');
-  const verifyTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+  // If a previous unverified account exists, overwrite it
+  if (exists && !exists.isVerified) {
+    exists.name = name;
+    exists.password = password;
+    exists.otp = generateOtp();
+    exists.otpExpiry = new Date(Date.now() + OTP_EXPIRY_MS);
+    exists.otpPurpose = 'verify';
+    await exists.save();
+    await sendOtpEmail(email, exists.otp, 'verify');
+    return { email };
+  }
 
-  const user = await User.create({ name, email, password, verifyToken, verifyTokenExpiry });
+  const otp = generateOtp();
+  const user = await User.create({
+    name,
+    email,
+    password,
+    otp,
+    otpExpiry: new Date(Date.now() + OTP_EXPIRY_MS),
+    otpPurpose: 'verify',
+  });
 
-  await sendVerificationEmail(email, verifyToken);
+  await sendOtpEmail(email, otp, 'verify');
+  return { email };
+};
+
+// ── Verify Registration OTP ─────────────────────────────────────
+
+export const verifyOtp = async (email, otp) => {
+  const user = await User.findOne({
+    email,
+    otp,
+    otpPurpose: 'verify',
+    otpExpiry: { $gt: new Date() },
+  });
+
+  if (!user) throw new Error('Invalid or expired OTP');
+
+  user.isVerified = true;
+  user.otp = undefined;
+  user.otpExpiry = undefined;
+  user.otpPurpose = undefined;
+  await user.save();
 
   return {
     user,
@@ -20,6 +62,26 @@ export const registerUser = async (name, email, password) => {
     refreshToken: signRefreshToken(user.id),
   };
 };
+
+// ── Resend OTP ──────────────────────────────────────────────────
+
+export const resendOtp = async (email, purpose = 'verify') => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('No account found with this email');
+
+  if (purpose === 'verify' && user.isVerified)
+    throw new Error('Email is already verified');
+
+  const otp = generateOtp();
+  user.otp = otp;
+  user.otpExpiry = new Date(Date.now() + OTP_EXPIRY_MS);
+  user.otpPurpose = purpose;
+  await user.save();
+
+  await sendOtpEmail(email, otp, purpose);
+};
+
+// ── Login ───────────────────────────────────────────────────────
 
 export const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
@@ -36,6 +98,8 @@ export const loginUser = async (email, password) => {
     refreshToken: signRefreshToken(user.id),
   };
 };
+
+// ── Google OAuth ────────────────────────────────────────────────
 
 export const findOrCreateGoogleUser = async ({ googleId, email, name, avatarUrl }) => {
   let user = await User.findOne({ googleId });
@@ -59,43 +123,65 @@ export const findOrCreateGoogleUser = async ({ googleId, email, name, avatarUrl 
   };
 };
 
-export const verifyEmail = async (token) => {
-  const user = await User.findOne({
-    verifyToken: token,
-    verifyTokenExpiry: { $gt: new Date() },
-  });
-
-  if (!user) throw new Error('Invalid or expired verification link');
-
-  user.isVerified = true;
-  user.verifyToken = undefined;
-  user.verifyTokenExpiry = undefined;
-  await user.save();
-};
+// ── Forgot Password ────────────────────────────────────────────
 
 export const forgotPassword = async (email) => {
   const user = await User.findOne({ email });
   // Don't reveal if email exists or not
   if (!user) return;
 
-  const resetToken = crypto.randomBytes(32).toString('hex');
-  user.resetToken = resetToken;
-  user.resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+  const otp = generateOtp();
+  user.otp = otp;
+  user.otpExpiry = new Date(Date.now() + OTP_EXPIRY_MS);
+  user.otpPurpose = 'reset';
   await user.save();
 
-  await sendPasswordResetEmail(email, resetToken);
+  await sendOtpEmail(email, otp, 'reset');
 };
 
-export const resetPassword = async (token, newPassword) => {
+// ── Verify Reset OTP → returns a short-lived resetToken ─────────
+
+export const verifyResetOtp = async (email, otp) => {
   const user = await User.findOne({
-    resetToken: token,
-    resetTokenExpiry: { $gt: new Date() },
+    email,
+    otp,
+    otpPurpose: 'reset',
+    otpExpiry: { $gt: new Date() },
   });
 
-  if (!user) throw new Error('Invalid or expired reset link');
+  if (!user) throw new Error('Invalid or expired OTP');
+
+  // Clear OTP so it can't be reused
+  user.otp = undefined;
+  user.otpExpiry = undefined;
+  user.otpPurpose = undefined;
+  await user.save();
+
+  // Issue a short-lived JWT that authorises the password change
+  const resetToken = jwt.sign(
+    { userId: user.id, purpose: 'reset' },
+    ENV.JWT_SECRET,
+    { expiresIn: '10m' },
+  );
+
+  return { resetToken };
+};
+
+// ── Reset Password ─────────────────────────────────────────────
+
+export const resetPassword = async (resetToken, newPassword) => {
+  let payload;
+  try {
+    payload = jwt.verify(resetToken, ENV.JWT_SECRET);
+  } catch {
+    throw new Error('Invalid or expired reset token');
+  }
+
+  if (payload.purpose !== 'reset') throw new Error('Invalid reset token');
+
+  const user = await User.findById(payload.userId);
+  if (!user) throw new Error('User not found');
 
   user.password = newPassword;
-  user.resetToken = undefined;
-  user.resetTokenExpiry = undefined;
   await user.save();
 };

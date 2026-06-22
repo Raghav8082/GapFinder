@@ -11,10 +11,9 @@ const UserSchema = new mongoose.Schema({
   streak:              { type: Number, default: 0 },
   lastActiveDate:      { type: Date },
   isVerified:          { type: Boolean, default: false },
-  verifyToken:         { type: String },
-  verifyTokenExpiry:   { type: Date },
-  resetToken:          { type: String },
-  resetTokenExpiry:    { type: Date },
+  otp:                 { type: String },
+  otpExpiry:           { type: Date },
+  otpPurpose:          { type: String, enum: ['verify', 'reset'] },
   learningPaths: [{
     pathSlug: { type: String, required: true },
     nodeStatuses: {
